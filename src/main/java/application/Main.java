@@ -59,7 +59,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         //help
-        Button helpButton = new Button("Help");
+        Button helpButton = new Button("Справка");
 
 
         helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -87,10 +87,10 @@ public class Main extends Application {
                         "Когда стрелы поразят количество шаров, равное лимиту, игра закончится. Игру можно начать заново." +
                         "<p>При входе в игру вы видите главное окно. В левом верхнем углу - готовые шары и стрелы. Количество стрел и шаров отображено в двух таблицах справа, верхняя - для стрел, нижняя - для шаров. " +
                         "<p>В таблице стрел отражены три значения - номер цели в списке целей, счетчик пораженных целей и счетчик пораженных целей-дураков, которые просто были у стрелы на пути, пока она летела к своей цели." +
-                        "все счетчики суммируются в втором основном счетчике в разделе Score. " +
+                        "все счетчики суммируются в втором основном счетчике в разделе Счет. " +
                         "<p>В таблице шаров отражены координаты их местонахождения, количество поражений от стрел и количество кользовательских кликов - очков. Клики пользователя суммируются в первом счетчике в разделе Score." +
-                        "<p> Также в разделе Score имеются кнопки начала и паузы игры(play, stop), а также кнопка Respawn, которая начинает новую игру с применением настроек, если они были отредактированы. " +
-                        "Также в этом разделе имеется таймер красного цвета, и кнопка help, которую вы уже нашли, если вы видите это окно." +
+                        "<p> Также в разделе Score имеются кнопки начала и паузы игры(Играть, пауза), а также кнопка 'Переиграть', которая начинает новую игру с применением настроек, если они были отредактированы. " +
+                        "Также в этом разделе имеется таймер красного цвета, и кнопка 'Справка', которую вы уже нашли, если вы видите это окно." +
                         "<p>В настройках справа помимо двух таблиц, имеются настройки количества шаров, стрел, максимальная скорость и ускорение стрелы, и лимит пораженных стрелами шаров, после которого сеанс игры закончится." +
                         "" +
                         "<p>Для продолжения игры просто закройте это окно." +
@@ -128,7 +128,7 @@ public class Main extends Application {
                 // Create the Scene
                 Scene helpScene = new Scene(root, 500, 500);
 
-                helpWindow.setTitle("Help");
+                helpWindow.setTitle("Помощь");
                 helpWindow.setScene(helpScene);
 
                 // Set position of second window, related to primary window.
@@ -166,7 +166,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
 
 
-        Label scoreLabel = new Label("Scores");
+        Label scoreLabel = new Label("Счет");
         scoreLabel.setStyle(Settings.scoreStyle);
 
         cnt = new SimpleStringProperty(Integer.toString(0));
@@ -181,13 +181,13 @@ public class Main extends Application {
         Label killLabel = new Label();
         killLabel.setStyle(Settings.scoreStyle);
         killLabel.textProperty().bind(kill);
-        Button playButton = new Button("Play");
+        Button playButton = new Button("Играть");
 
         playButton.setDisable(false);
-        Button stopButton = new Button("Stop");
+        Button stopButton = new Button("Пауза");
         stopButton.setDisable(true);
 
-        Button respawnButton = new Button("Respawn");
+        Button respawnButton = new Button("Переиграть");
         respawnButton.setOnAction(event -> {
             timeline.stop();
             timeSeconds.setValue(0);
@@ -297,11 +297,11 @@ public class Main extends Application {
         settingsGridPane.setPadding(new Insets(5));
         settingsGridPane.setHgap(25);
         settingsGridPane.setVgap(15);
-        settingsGridPane.add(new Label("Balls    "), 0, 0);
-        settingsGridPane.add(new Label("Arrows   "), 0, 1);
-        settingsGridPane.add(new Label("Max speed"), 0, 2);
-        settingsGridPane.add(new Label("Max force"), 0, 3);
-        settingsGridPane.add(new Label("Kill limit"), 0, 4);
+        settingsGridPane.add(new Label("Шаров"), 0, 0);
+        settingsGridPane.add(new Label("Стрел"), 0, 1);
+        settingsGridPane.add(new Label("Макс.  скорость"), 0, 2);
+        settingsGridPane.add(new Label("Ускорение"), 0, 3);
+        settingsGridPane.add(new Label("Предел очков компьютера"), 0, 4);
         settingsGridPane.add(atc, 1, 0);
         settingsGridPane.add(vc, 1, 1);
         settingsGridPane.add(ms, 1, 2);
@@ -309,13 +309,13 @@ public class Main extends Application {
         settingsGridPane.add(kl, 1, 4);
 
         TableView<Vehicle> vehiclesTableView = new TableView<>();
-        TableColumn<Vehicle, Integer> vehicleColumn1 = new TableColumn<Vehicle, Integer>("Target Index");
+        TableColumn<Vehicle, Integer> vehicleColumn1 = new TableColumn<Vehicle, Integer>("Номер цели");
         vehicleColumn1.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("targetIndex"));
 
-        TableColumn<Vehicle, Integer> vehicleColumn2 = new TableColumn<Vehicle, Integer>("Kill Count");
+        TableColumn<Vehicle, Integer> vehicleColumn2 = new TableColumn<Vehicle, Integer>("Счет целей");
         vehicleColumn2.setCellValueFactory(new PropertyValueFactory<>("killCount"));
 
-        TableColumn<Vehicle, Integer> vehicleColumn3 = new TableColumn<Vehicle, Integer>("Fool Count");
+        TableColumn<Vehicle, Integer> vehicleColumn3 = new TableColumn<Vehicle, Integer>("Счет 'дураков'");
         vehicleColumn3.setCellValueFactory(new PropertyValueFactory<>("foolCount"));
 
         vehiclesTableView.getColumns().addAll(vehicleColumn1, vehicleColumn2, vehicleColumn3);
@@ -326,16 +326,16 @@ public class Main extends Application {
         attractorColumn1.setCellValueFactory(new PropertyValueFactory<>("x"));
         TableColumn<Attractor, Integer> attractorColumn2 = new TableColumn<Attractor, Integer>("Y");
         attractorColumn2.setCellValueFactory(new PropertyValueFactory<>("y"));
-        TableColumn<Attractor, Integer> attractorColumn3 = new TableColumn<Attractor, Integer>("Respawn");
+        TableColumn<Attractor, Integer> attractorColumn3 = new TableColumn<Attractor, Integer>("Очков компьютера");
         attractorColumn3.setCellValueFactory(new PropertyValueFactory<>("killCount"));
-        TableColumn<Attractor, Integer> attractorColumn4 = new TableColumn<Attractor, Integer>("User Click");
+        TableColumn<Attractor, Integer> attractorColumn4 = new TableColumn<Attractor, Integer>("Очков пользователя");
         attractorColumn4.setCellValueFactory(new PropertyValueFactory<>("userClickCount"));
 
         attractorsTableView.getColumns().addAll(attractorColumn1, attractorColumn2, attractorColumn3, attractorColumn4);
         attractorsTableView.setItems(allAttractors);
 
         VBox vBox = new VBox(20, settingsGridPane, vehiclesTableView, attractorsTableView);
-        vBox.setPrefSize(550, 720);
+        vBox.setPrefSize(700, 720);
         vBox.setPadding(new Insets(15, 15, 15, 15));
         HBox hbox = new HBox(layerPane, vBox);
         root.setTop(userCountHBox);
